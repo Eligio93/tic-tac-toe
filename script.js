@@ -1,21 +1,24 @@
-let playgrid = document.getElementById("playgrid");
-let gameArray=["","","","","","","","",""];
+
+//let gameArray=["X","","","","","","","",""];
 
 let gameBoard = (() => {
+    let gameArray=[];
         //Append to DOM the gameboard from the array
-        const printBoard = (array) => {   
-            for (let i = 0; i < array.length; i++) {
+        const createBoard = () => {
+            let playgrid = document.getElementById("playgrid");
+            for (let i = 0; i < 9; i++) {
                 const cell = document.createElement("button");
                 cell.classList.add("cell");
                 cell.setAttribute("data-cell", i);
-                cell.textContent =array[i];
+                gameArray.push("X");
+                //cell.textContent =array[i];
                 playgrid.appendChild(cell);
             }
             
         }
 
         // Get the current array from the board
-        const getBoard=()=>gameArray;
+        let getBoard=()=>gameArray;
 
         //Clean the board in case of a new game
         const cleanBoard=function(array){
@@ -27,9 +30,10 @@ let gameBoard = (() => {
 
 
     return {
-        printBoard,
+        createBoard,
         getBoard,
-        cleanBoard
+        cleanBoard,
+        
         
     }
 
@@ -42,8 +46,7 @@ function Player(name,mark,active){
         active
     }
 }
-let playerOne=new Player("Eligio","O", true);
-let playerTwo=new Player("Marco","X",false);
+
 
 let gameController=(()=>{
     //Change player function
@@ -57,14 +60,26 @@ let gameController=(()=>{
 
         }
     }
+    //Check winner function
 
 
+    //
     return{
         switchPlayer
     }
 })();
-console.log(playerOne,playerTwo);
-gameController.switchPlayer();
-console.log(playerOne,playerTwo);
 
+let displayController=(()=>{
+    const printBoard=()=>{
+       
+    }
+
+})();
+
+
+
+let playerOne=new Player("Eligio","O", true);
+let playerTwo=new Player("Marco","X",false);
+
+gameBoard.createBoard();
 
