@@ -13,14 +13,26 @@ let gameBoard = (() => {
             }
             
         }
+
         // Get the current array from the board
-        const getBoard=()=>gameArray;    
+        const getBoard=()=>gameArray;
+
+        //Clean the board in case of a new game
+        const cleanBoard=function(array){
+            for(let i=0;i<array.length;i++){
+                array[i]="";
+            }
+            return array;
+        }
+
 
     return {
         printBoard,
         getBoard,
+        cleanBoard
         
     }
 
 })();
 console.log(gameBoard.getBoard());
+console.log(gameArray);
