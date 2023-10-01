@@ -1,5 +1,5 @@
 let playgrid = document.getElementById("playgrid");
-let gameArray=["X","O","X","O","X","","",""];
+let gameArray=["","","","","","","","",""];
 
 let gameBoard = (() => {
         //Append to DOM the gameboard from the array
@@ -44,4 +44,27 @@ function Player(name,mark,active){
 }
 let playerOne=new Player("Eligio","O", true);
 let playerTwo=new Player("Marco","X",false);
+
+let gameController=(()=>{
+    //Change player function
+    let switchPlayer=()=>{
+        if (playerOne.active== true){
+            playerOne.active=false;
+            playerTwo.active=true;
+        }else{
+            playerOne.active=true;
+            playerTwo.active=false;
+
+        }
+    }
+
+
+    return{
+        switchPlayer
+    }
+})();
+console.log(playerOne,playerTwo);
+gameController.switchPlayer();
+console.log(playerOne,playerTwo);
+
 
