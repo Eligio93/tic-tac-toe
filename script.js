@@ -1,50 +1,92 @@
-let playgrid=document.getElementById("playgrid");
+let playgrid = document.getElementById("playgrid");
+let gameArray=["","","","","","","",""];
 
-let gameBoard=(()=>{
+let gameBoard = (() => {
     //initialize the empty array
-    let gameArray=["","","","","","","","",""];
+    gameArray=["X"];
     //create the gameboard from the array
-    const createBoard=(array)=>{
-        for(let i=0;i < array.length;i++){
-            const cell=document.createElement("button");
+    const createBoard = (array) => {   
+        for (let i = 0; i < array.length; i++) {
+            const cell = document.createElement("button");
             cell.classList.add("cell");
             cell.setAttribute("data-cell", i);
-            cell.textContent=array[i];
+            cell.textContent =array[i];
             playgrid.appendChild(cell);
         }
+        
     }
+    let getBoard= function(){
+        return gameArray
+    }
+    
 
     return {
-        gameArray,
-        createBoard
+        getBoard,
+        createBoard,
+        // gameArray
+        
     }
 
 })();
 
-let gameController=((player1,player2)=>{
-    
 
 
-})(player1,player2);
+const Player = (name, mark, status) => {
 
-const Player=(name,mark,status)=>{
-    const getName=()=>name;
-    const getStatus =() =>status;
 
     return {
-        getName,
-        getStatus
+        name,
+        mark,
+        status
     }
+}
+const switchPlayer = function (player1, player2) {
+    if (player1.status == "On") {
+        player1.status = "Off";
+        player2.status = "On";
+    } else {
+        player1.status = "On";
+        player2.status = "Off"
+    }
+
 }
 
 
 
+//function playRound
+function playRound(){
+   
+
+}
+
+let player1 = Player("Eligio", "X", "On");
+let player2 = Player("Marco", "O", "Off");
 
 
 
 
-const player1= Player("Eligio","X","On");
-const player2= Player("Marco","O","Off");
-console.log(player1);
 
-gameBoard.createBoard(gameBoard.gameArray);
+
+console.log(player1.status,player2.status);
+
+switchPlayer(player1,player2);
+console.log(player1.status,player2.status);
+switchPlayer(player1,player2);
+console.log(player1.status,player2.status);
+
+//gameBoard.createBoard();
+//console.log(createBoard.gameArray)
+
+
+function handleButtonClick(event) {
+    const button = event.target;
+    console.log(event);
+    const dataCell = button.getAttribute('data-cell');
+    console.log(dataCell);
+    //qua andrà la funzione di playround
+
+}
+const buttons = document.querySelectorAll("button[data-cell]");
+buttons.forEach(button => {
+    button.addEventListener('click', handleButtonClick);
+});
