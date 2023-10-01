@@ -34,5 +34,14 @@ let gameBoard = (() => {
     }
 
 })();
-console.log(gameBoard.getBoard());
-console.log(gameArray);
+
+function Player(name,mark,active){
+    return {
+        name,
+        mark,
+        active
+    }
+}
+let playerOne=new Player("Eligio","O", true);
+let playerTwo=new Player("Marco","X",false);
+
