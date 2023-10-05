@@ -1,18 +1,22 @@
-
-let restart = document.getElementById("restart");
-restart.addEventListener("click", function () {
-    gameBoard.cleanBoard(gameBoard.getBoard());
-    displayController.printBoard(gameBoard.getBoard());
-})
+let playerOne= new Player("","",true);
+let playerTwo=new Player("","",false);
+// let restart = document.getElementById("restart");
+// restart.addEventListener("click", function () {
+//     gameBoard.cleanBoard(gameBoard.getBoard());
+//     displayController.printBoard(gameBoard.getBoard());
+// })
 
 
 
 
 let gameBoard = (() => {
     let gameArray = [];
-    let playgrid = document.getElementById("playgrid");
+   
     //Append to DOM the gameboard from the array
     const createBoard = () => {
+        let playgrid = document.createElement("div");
+        playgrid.id="playgrid";
+        document.body.appendChild(playgrid)
         for (let i = 0; i < 9; i++) {
             const cell = document.createElement("button");
             cell.classList.add("cell");
@@ -20,12 +24,9 @@ let gameBoard = (() => {
             gameArray.push("");
             playgrid.appendChild(cell);
         }
-
     }
-
     // Get the current array from the board
     let getBoard = () => gameArray;
-
     //Clean the board in case of a new game
     const cleanBoard = function (array) {
         for (let i = 0; i < array.length; i++) {
@@ -39,11 +40,10 @@ let gameBoard = (() => {
         createBoard,
         getBoard,
         cleanBoard,
-
-
     }
-
 })();
+
+
 
 function Player(name, mark, active) {
     return {
@@ -52,6 +52,7 @@ function Player(name, mark, active) {
         active
     }
 }
+
 
 
 let gameController = (() => {
@@ -63,35 +64,35 @@ let gameController = (() => {
         } else {
             playerOne.active = true;
             playerTwo.active = false;
-
         }
     }
     //Check winner function
-
     let checkWinner = (playerOne, playerTwo) => {
         let array = gameBoard.getBoard();
+        //give all the possible winning combinations
         let winningCombinations = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Righe
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Colonne
-            [0, 4, 8], [2, 4, 6] // Diagonali
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
         ];
+        //check if all the wiining combinations matching the board
         for (let element of winningCombinations) {
             const [a, b, c] = element;
             if (array[a] === playerOne.mark && array[b] === playerOne.mark && array[c] === playerOne.mark) {
-                return console.log("player one wins");
+                return console.log(playerOne.name+" wins");
             } else if (array[a] === playerTwo.mark && array[b] === playerTwo.mark && array[c] === playerTwo.mark) {
-                return console.log("Player 2 wins")
+                return console.log(playerOne.name+" wins")
             }
+            //if there is no more cells available is a tie
             if (array.every(cell => cell !== "")) {
                 return console.log("Tie");
             }
         }
-
     }
 
     return {
         switchPlayer,
-        checkWinner
+        checkWinner,
     }
 })();
 
@@ -117,6 +118,16 @@ let displayController = (() => {
 })();
 
 function playGame() {
+    document.getElementById("main").style.display="none";
+    let name1=document.getElementById("name1").value;
+    let mark1=document.getElementById("mark1").value;
+    let name2=document.getElementById("name2").value;
+    let mark2=document.getElementById("mark2").value;
+    playerOne.name=name1;
+    playerOne.mark=mark1;
+    playerTwo.name=name2;
+    playerTwo.mark=mark2;   
+    gameBoard.createBoard();
     let allCell = document.querySelectorAll(".cell");
     allCell.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -140,13 +151,18 @@ function playGame() {
 
 }
 
+//check if the inputs are correctly done
+document.getElementById("newGame").addEventListener("click",playGame);
 
 
-let playerOne = new Player("Eligio", "O", true);
-let playerTwo = new Player("Marco", "X", false);
 
-gameBoard.createBoard();
-playGame();
+
+
+
+
+
+
+//playGame();
 
 
 
