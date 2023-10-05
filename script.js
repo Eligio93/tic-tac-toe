@@ -118,11 +118,15 @@ let displayController = (() => {
 })();
 
 function playGame() {
-    document.getElementById("main").style.display="none";
+    //get data from user input
+    
     let name1=document.getElementById("name1").value;
     let mark1=document.getElementById("mark1").value;
     let name2=document.getElementById("name2").value;
     let mark2=document.getElementById("mark2").value;
+    //Check data validity
+    if(checkValidity()){
+    document.getElementById("main").style.display="none";
     playerOne.name=name1;
     playerOne.mark=mark1;
     playerTwo.name=name2;
@@ -147,23 +151,27 @@ function playGame() {
 
             }
         })
-        
+
     })
+    }
+    
+
+}
+function checkValidity(name1,mark1,name2,mark2){
+    if(name1==""&& name2=="" || name1==name2){
+        alert ("Please check the names entered")
+        return false
+    }else if(mark1==mark2){
+        alert ("The markers can not be the same");
+        return false
+    }else{
+        return true
+    }
 
 }
 
-//check if the inputs are correctly done
 document.getElementById("newGame").addEventListener("click",playGame);
 
-
-
-
-
-
-
-
-
-//playGame();
 
 
 
