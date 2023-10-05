@@ -147,6 +147,7 @@ function playGame() {
 
             }
         })
+        
     })
 
 }
