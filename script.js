@@ -66,6 +66,16 @@ let gameController = (() => {
             playerTwo.active = false;
         }
     }
+    //Get the active player
+    let activePlayer=()=>{
+        console.log(playerOne,playerTwo)
+        if(playerOne.active==true){
+            return playerOne.name
+        }else{
+            return playerTwo.name
+        }
+
+    }
     //Check winner function
     let checkWinner = (playerOne, playerTwo) => {
         let array = gameBoard.getBoard();
@@ -93,6 +103,7 @@ let gameController = (() => {
     return {
         switchPlayer,
         checkWinner,
+        activePlayer
     }
 })();
 
@@ -125,21 +136,28 @@ function playGame() {
     let name2=document.getElementById("name2").value;
     let mark2=document.getElementById("mark2").value;
     //Check data validity
-    if(checkValidity()){
+    if(checkValidity(name1,mark1,name2,mark2)){
+    document.getElementById("newGame").style.display="none";
     document.getElementById("main").style.display="none";
     playerOne.name=name1;
     playerOne.mark=mark1;
     playerTwo.name=name2;
-    playerTwo.mark=mark2;   
+    playerTwo.mark=mark2;
+    document.getElementById("title").style.fontSize="30px";
+    let turn=document.createElement("p");
+    turn.textContent=gameController.activePlayer()+"'s turn"
+    document.body.appendChild(turn);    
     gameBoard.createBoard();
     let allCell = document.querySelectorAll(".cell");
     allCell.forEach(function (element) {
         element.addEventListener("click", function () {
             let index = element.getAttribute("data-cell");
+           
             if (playerOne.active == true && element.textContent == "") {
                 gameBoard.getBoard()[index] = playerOne.mark;
                 displayController.printBoard(gameBoard.getBoard());
                 gameController.switchPlayer();
+                turn.textContent=gameController.activePlayer()+"'s turn"
                 gameController.checkWinner(playerOne, playerTwo);
 
 
@@ -147,6 +165,7 @@ function playGame() {
                 gameBoard.getBoard()[index] = playerTwo.mark;
                 displayController.printBoard(gameBoard.getBoard());
                 gameController.switchPlayer();
+                turn.textContent=gameController.activePlayer()+"'s turn"
                 gameController.checkWinner(playerOne, playerTwo);
 
             }
@@ -158,7 +177,7 @@ function playGame() {
 
 }
 function checkValidity(name1,mark1,name2,mark2){
-    if(name1==""&& name2=="" || name1==name2){
+    if(name1=="" || name2=="" || name1==name2){
         alert ("Please check the names entered")
         return false
     }else if(mark1==mark2){
