@@ -24,6 +24,18 @@ let gameBoard = (() => {
             gameArray.push("");
             playgrid.appendChild(cell);
         }
+        let buttonNav=document.createElement("div");
+        buttonNav.id="buttonNav";
+        document.body.appendChild(buttonNav);
+        let restart=document.createElement("button");
+        restart.id="restart";
+        restart.textContent="Restart";
+        buttonNav.appendChild(restart);
+        let newGame2=document.createElement("button");
+        newGame2.id="newGame2";
+        newGame2.textContent="New Game";
+        buttonNav.appendChild(newGame2);
+
     }
     // Get the current array from the board
     let getBoard = () => gameArray;
@@ -139,6 +151,7 @@ function playGame() {
     if(checkValidity(name1,mark1,name2,mark2)){
     document.getElementById("newGame").style.display="none";
     document.getElementById("main").style.display="none";
+    //Assign values to players
     playerOne.name=name1;
     playerOne.mark=mark1;
     playerTwo.name=name2;
