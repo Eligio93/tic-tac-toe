@@ -1,10 +1,6 @@
 let playerOne= new Player("","",true);
 let playerTwo=new Player("","",false);
-// let restart = document.getElementById("restart");
-// restart.addEventListener("click", function () {
-//     gameBoard.cleanBoard(gameBoard.getBoard());
-//     displayController.printBoard(gameBoard.getBoard());
-// })
+
 
 
 
@@ -101,9 +97,10 @@ let gameController = (() => {
         for (let element of winningCombinations) {
             const [a, b, c] = element;
             if (array[a] === playerOne.mark && array[b] === playerOne.mark && array[c] === playerOne.mark) {
+               
                 return console.log(playerOne.name+" wins");
             } else if (array[a] === playerTwo.mark && array[b] === playerTwo.mark && array[c] === playerTwo.mark) {
-                return console.log(playerOne.name+" wins")
+                return console.log(playerTwo.name+" wins")
             }
             //if there is no more cells available is a tie
             if (array.every(cell => cell !== "")) {
@@ -161,6 +158,18 @@ function playGame() {
     turn.textContent=gameController.activePlayer()+"'s turn"
     document.body.appendChild(turn);    
     gameBoard.createBoard();
+
+    let restart = document.getElementById("restart");
+    restart.addEventListener("click", function () {
+    gameBoard.cleanBoard(gameBoard.getBoard());
+    displayController.printBoard(gameBoard.getBoard());
+    playerOne.active=true;
+    playerTwo.active=false;
+    turn.textContent=playerOne.name+"'s turn";
+})
+
+
+    console.log(document.getElementById("buttonNav"))
     let allCell = document.querySelectorAll(".cell");
     allCell.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -201,6 +210,7 @@ function checkValidity(name1,mark1,name2,mark2){
     }
 
 }
+
 
 document.getElementById("newGame").addEventListener("click",playGame);
 
